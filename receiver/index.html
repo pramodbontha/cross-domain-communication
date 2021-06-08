@@ -1,0 +1,85 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Podolino" />
+    <title>receiver</title>
+    <!-- <script src="http://192.168.178.72:3000/index.js?4dssss"></script>-->
+    <!-- <script src="https://testing-frontend.podolino.de/index.js"></script> -->
+    <style>
+      body {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <iframe
+      src="http://localhost:3001"
+      id="iframe-id"
+      style="position: absolute; width: 0; height: 0; border: 0"
+      title="Iframe Example"
+    ></iframe>
+    <div id="footprinttech-button"></div>
+
+    <button onclick="openNewWindow()"> Click to open window</button>
+
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+    <script src="./src/index.js"></script>
+
+    <script>
+
+      const openNewWindow = (e) => {
+        window.open('http://localhost:3000', '','toolbar=0,status=0,width=626,height=436');
+      }
+
+      (function () {
+        window.addEventListener(
+          "message",
+          function (event) {
+            if (event.origin === "http://localhost:3000") {
+              if (event.data === "closed") {
+                alert("popup window was closed");
+                const domains = [
+                  "http://localhost:3002",
+                  "http://localhost:3000",
+                  "http://localhost:3001",
+                  "http://localhost:3003",
+                ];
+                var iframe = document.getElementsByTagName("iframe")[0];
+                var win;
+                try {
+                  win = iframe.contentWindow;
+                } catch (e) {
+                  win = iframe.contentWindow;
+                }
+                window.onmessage = function (e) {
+                  if (!domains.includes(e.origin)) return;
+                  console.log(JSON.parse(e.data));
+                };
+                win?.postMessage(
+                  JSON.stringify({ key: "storage", method: "get" }),
+                  "*"
+                );
+              }
+            }
+          },
+          false
+        );
+      })();
+    </script>
+  </body>
+</html>

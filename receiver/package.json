@@ -1,0 +1,19 @@
+{
+  "name": "cta-frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel --no-autoinstall -p 3002 watch index.html --no-hmr",
+    "start:host": "parcel --no-autoinstall -p 3002 --host $npm_config_host watch index.html --no-hmr"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4"
+  },
+  "dependencies": {
+    "socket.io": "^4.1.2",
+    "socket.io-client": "^4.1.2"
+  }
+}
