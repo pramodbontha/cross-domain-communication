@@ -18,15 +18,9 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <iframe
-      src="http://localhost:3001"
-      id="iframe-id"
-      style="position: absolute; width: 0; height: 0; border: 0"
-      title="Iframe Example"
-    ></iframe>
     <div id="footprinttech-button"></div>
 
-    <button onclick="openNewWindow()"> Click to open window</button>
+    <button onclick="openNewWindow()">Click to open window</button>
 
     <!--
       This HTML file is a template.
@@ -39,47 +33,19 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
     <script src="./src/index.js"></script>
+    
 
     <script>
-
       const openNewWindow = (e) => {
-        window.open('http://localhost:3000', '','toolbar=0,status=0,width=626,height=436');
-      }
-
-      (function () {
-        window.addEventListener(
-          "message",
-          function (event) {
-            if (event.origin === "http://localhost:3000") {
-              if (event.data === "closed") {
-                alert("popup window was closed");
-                const domains = [
-                  "http://localhost:3002",
-                  "http://localhost:3000",
-                  "http://localhost:3001",
-                  "http://localhost:3003",
-                ];
-                var iframe = document.getElementsByTagName("iframe")[0];
-                var win;
-                try {
-                  win = iframe.contentWindow;
-                } catch (e) {
-                  win = iframe.contentWindow;
-                }
-                window.onmessage = function (e) {
-                  if (!domains.includes(e.origin)) return;
-                  console.log(JSON.parse(e.data));
-                };
-                win?.postMessage(
-                  JSON.stringify({ key: "storage", method: "get" }),
-                  "*"
-                );
-              }
-            }
-          },
-          false
+        window.open(
+          "http://localhost:3000/?customerId=1245&apiKey=32sd32rdr43434&shopType=shopware&articleNumber=SW10016",
+          "",
+          "toolbar=0,status=0,width=626,height=436"
         );
-      })();
+      };
+
+     
     </script>
   </body>
 </html>
+

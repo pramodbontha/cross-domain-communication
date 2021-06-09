@@ -1,26 +1,23 @@
 import "./App.css";
-
+import * as postRobot from 'post-robot'
 
 function App() {
   const sendMessage = () => {
-    var iframe = document.getElementsByTagName('iframe')[0];
-    var win;
-    try {
-        win = iframe.contentWindow;
-    } catch(e) {
-        win = iframe.contentWindow;
+    let urlString = window.location.href;
+    let url = new URL(urlString);
+    const shoppingCartData = {
+      customerId: url.searchParams.get('customerId'),
+      apiKey: url.searchParams.get('apiKey'),
+      shopType: url.searchParams.get('shopType'),
+      articleNumber: url.searchParams.get('articleNumber'),
     }
-    var obj = {
-       name: "Pramod",
-       test: "Testing cross domain communication"
-    };
-    // save obj in subdomain localStorage
-    win.postMessage(JSON.stringify({key: 'storage', method: "set", data: obj}), "*");
+    postRobot
+      .send(window.opener, "getUser", shoppingCartData)
+      .catch(function (err) {
+        console.error(err);
+      });
   };
 
-  window.onbeforeunload = function() {
-    window.opener.postMessage('closed', 'http://localhost:3002');
-};
 
   return (
     <div className="App">
