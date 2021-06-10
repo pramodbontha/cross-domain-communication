@@ -20,7 +20,10 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="footprinttech-button"></div>
 
-    <button onclick="openNewWindow()">Click to open window</button>
+    <div>
+      <button onclick="openNewWindow()">Click to open window</button>
+    </div>
+    <div id="messages"></div>
 
     <!--
       This HTML file is a template.
@@ -33,19 +36,15 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
     <script src="./src/index.js"></script>
-    
 
     <script>
       const openNewWindow = (e) => {
         window.open(
-          "http://localhost:3000/?customerId=1245&apiKey=32sd32rdr43434&shopType=shopware&articleNumber=SW10016",
+          "http://192.168.0.30:3000/?customerId=1245&apiKey=32sd32rdr43434&shopType=shopware&articleNumber=SW10016",
           "",
           "toolbar=0,status=0,width=626,height=436"
         );
       };
-
-     
     </script>
   </body>
 </html>
-
