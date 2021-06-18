@@ -5,6 +5,6 @@ import * as postRobot from "post-robot";
     // Have it return some data to the calling window
     console.log(event.data);
     var el = document.getElementById("messages");
-    el.innerHTML += "\n" + JSON.stringify(event.data);
+    el.innerHTML = JSON.stringify(event.data);
   });
 })();
