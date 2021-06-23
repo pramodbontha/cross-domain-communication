@@ -1,32 +1,37 @@
 import "./App.css";
-import React, { useState } from 'react';
-import * as postRobot from 'post-robot'
+import React, { useState, useEffect } from "react";
 
 function App() {
-  const [message, setmessage] = useState('');
-  const sendMessage = () => {
-    let urlString = window.location.href;
-    let url = new URL(urlString);
-    const shoppingCartData = {
-      message: message,
-      customerId: url.searchParams.get('customerId'),
-      apiKey: url.searchParams.get('apiKey'),
-      shopType: url.searchParams.get('shopType'),
-      articleNumber: url.searchParams.get('articleNumber'),
-    }
-    postRobot
-      .send(window.opener, "getUser", shoppingCartData)
-      .catch(function (err) {
-        console.error(err);
-      });
-    setTimeout(()=>{window.close();},1000)
-    
-  };
+  const [message, setmessage] = useState("");
+  const [shoppingCartData, setShoppingCartData] = useState();
 
+  useEffect(() => {
+    window.addEventListener(
+      "message",
+      (event) => {
+        console.log(event.data);
+        if (event.origin !== "http://localhost:3002") return;
+        setShoppingCartData(event.data);
+        // ...
+      },
+      false
+    );
+  }, []);
+
+  const sendMessage = () => {
+    window.opener.postMessage(
+      { message, ...shoppingCartData },
+      "http://localhost:3002"
+    ); // (1)
+  };
 
   return (
     <div className="App">
-      <input onChange={(e)=>{setmessage(e.target.value)}}/>
+      <input
+        onChange={(e) => {
+          setmessage(e.target.value);
+        }}
+      />
       <button onClick={(e) => sendMessage()}>Send Button</button>
     </div>
   );
